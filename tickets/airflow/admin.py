@@ -1,3 +1,5 @@
 from django.contrib import admin
+from airflow.models import SearchResult, SearchResultItem
 
-# Register your models here.
+admin.site.register(SearchResult)
+admin.site.register(SearchResultItem)

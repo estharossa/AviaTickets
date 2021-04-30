@@ -1,6 +1,6 @@
-from rest_framework import viewsets, generics, mixins
+from rest_framework import generics
 from rest_framework.response import Response
-from airflow.utils import *
+from airflow.utils.functions import *
 
 from airflow.serializers import *
 from rest_framework.permissions import *
@@ -17,5 +17,6 @@ class SearchResultsView(generics.CreateAPIView):
         queryset = self.get_queryset().filter(origin=search_params.origin,
                                               destination=search_params.destination,
                                               departure_at__date=search_params.get_date())
+
         serializer = SearchResultItemSerializer(queryset, many=False)
         return Response(serializer.data)

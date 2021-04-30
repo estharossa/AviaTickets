@@ -18,5 +18,5 @@ class SearchResultsView(generics.CreateAPIView):
                                               destination=search_params.destination,
                                               departure_at__date=search_params.get_date())
 
-        serializer = SearchResultItemSerializer(queryset, many=False)
+        serializer = SearchResultItemSerializer(queryset, many=True)
         return Response(serializer.data)

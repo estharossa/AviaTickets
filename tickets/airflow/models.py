@@ -1,6 +1,15 @@
 import uuid
 
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
+
+
+class FareFamily:
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='ID')
+    name = models.CharField(max_length=32)
+    code = models.CharField(max_length=32)
+    price = models.IntegerField(verbose_name='Цена')
+    currency = models.CharField(max_length=3, verbose_name='Валюта', default='KZT')
 
 
 # TODO: refactor fields using choices

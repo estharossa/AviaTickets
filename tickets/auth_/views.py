@@ -1,3 +1,21 @@
-from django.shortcuts import render
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from .serializers import RegisterSerializer, UserSerializer
+from rest_framework_jwt.views import obtain_jwt_token
 
-# Create your views here.
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register(request):
+    serializer = RegisterSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    user = serializer.save()
+    return Response({
+        "user": UserSerializer(user, context=RegisterSerializer.context).data,
+        "message": "User Created Successfully.  Now perform Login to get your token",
+    })
+
+
+# wrapper for the obtain_jwt_token
+login = obtain_jwt_token

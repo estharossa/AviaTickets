@@ -1,5 +1,5 @@
 from django.contrib import admin
-from airflow.models import SearchResult, SearchResultItem
+from airflow.models import *
 
-admin.site.register(SearchResult)
-admin.site.register(SearchResultItem)
+admin.site.register(Offer)
+admin.site.register(Order)

@@ -42,7 +42,6 @@ class MainUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('is_staff'), default=False)
-    # avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     role = models.SmallIntegerField(choices=USER_ROLES, default=USER_ROLE_CLIENT)
 
     objects = MainUserManager()
@@ -61,6 +60,9 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     user = models.OneToOneField(MainUser, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.user.first_name
+
     class Meta:
-        verbose_name = 'Профиль'
-        verbose_name_plural = 'Профили'
+        verbose_name = 'Profile'
+        verbose_name_plural = 'Profiles'

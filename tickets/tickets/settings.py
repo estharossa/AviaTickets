@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'airflow',
     'payment',
     'cabinet',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -172,7 +173,7 @@ JWT_AUTH = {
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
 

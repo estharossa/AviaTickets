@@ -1,0 +1,6 @@
+MASTER_CARD = 1
+VISA = 2
+BANK_CARD_TYPE = (
+    (MASTER_CARD, "MASTER_CARD"),
+    (VISA, "VISA")
+)

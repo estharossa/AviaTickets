@@ -40,9 +40,10 @@ class Offer(models.Model):
         return f'{self.origin}-{self.destination}, {self.departure_at}'
 
 
-class Order(models.Model):
+class FlightOrder(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='ID')
-    user = models.ForeignKey(MainUser(), on_delete=models.CASCADE, verbose_name='Пользователь')
+    offer_id = models.UUIDField(verbose_name='Offer ID')
+    user = models.ForeignKey(MainUser(), on_delete=models.CASCADE, verbose_name='Пользователь', related_name='orders')
     status = models.SmallIntegerField(choices=ORDER_STATUSES, verbose_name="Статус заказа")
     price = models.IntegerField(verbose_name='Цена')
     currency = models.CharField(max_length=3, verbose_name='Валюта', default='KZT')

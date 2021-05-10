@@ -1,13 +1,12 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from airflow.utils.functions import *
-
 from airflow.serializers import *
 from rest_framework.permissions import *
 
 
 class SearchResultsView(generics.CreateAPIView):
-    serializer_class = SearchResultItemSerializer
+    serializer_class = OfferListSerializer
     queryset = Offer.objects.all()
     permission_classes = [IsAuthenticated]
 
@@ -23,5 +22,21 @@ class SearchResultsView(generics.CreateAPIView):
                                               destination=search_params.destination,
                                               departure_at__date=search_params.get_date())
 
-        serializer = SearchResultItemSerializer(queryset, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class OrderView(generics.CreateAPIView):
+    serializer_class = CreateOrderSerializer
+    queryset = FlightOrder.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        user = request.user
+        context = {
+            'user': user
+        }
+        serializer = CreateOrderSerializer(data=request.data, context=context)
+        serializer.is_valid(raise_exception=True)
+        order = serializer.save()
+        return Response(OrderInfoSerializer(order).data)

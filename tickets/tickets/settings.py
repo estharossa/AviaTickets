@@ -209,7 +209,15 @@ LOGGING = {
         }
     },
     'loggers': {
-        'main': {
+        'airflow': {
+            'handlers': ['file_handler', 'console_handler'],
+            'level': 'DEBUG',
+        },
+        'payment': {
+            'handlers': ['file_handler', 'console_handler'],
+            'level': 'DEBUG',
+        },
+        'cabinet': {
             'handlers': ['file_handler', 'console_handler'],
             'level': 'DEBUG',
         },

@@ -5,7 +5,7 @@ from airflow.serializers import *
 from rest_framework.permissions import *
 
 
-class SearchResultsView(generics.CreateAPIView):
+class OfferView(generics.CreateAPIView):
     serializer_class = OfferListSerializer
     queryset = Offer.objects.all()
     permission_classes = [IsAuthenticated]
@@ -26,6 +26,12 @@ class SearchResultsView(generics.CreateAPIView):
         return Response(serializer.data)
 
 
+class OfferDetailsView(generics.RetrieveAPIView):
+    serializer_class = OfferListSerializer
+    queryset = Offer.objects.all()
+    permission_classes = [IsAuthenticated]
+
+
 class OrderView(generics.CreateAPIView):
     serializer_class = CreateOrderSerializer
     queryset = FlightOrder.objects.all()
@@ -40,3 +46,6 @@ class OrderView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         order = serializer.save()
         return Response(OrderInfoSerializer(order).data)
+
+
+

@@ -1,9 +1,12 @@
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from .serializers import CabinetUserSerializer, BankCardSerializer
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from .models import BankCard
+from auth_.models import MainUser
+from airflow.models import FlightOrder
+from airflow.serializers import OrderInfoSerializer
 
 
 @api_view(['GET'])
@@ -13,10 +16,24 @@ def cabinet_orders(request):
     return Response(serializer.data)
 
 
+class CabinetOrdersView(generics.ListAPIView):
+    queryset = MainUser.objects.all()
+    serializer_class = CabinetUserSerializer
+
+    def list(self, request, *args, **kwargs):
+        serializer = CabinetUserSerializer(request.user)
+        return Response(serializer.data)
+
+
+class CabinetOrderDetailsView(generics.RetrieveAPIView):
+    queryset = FlightOrder.objects.all()
+    serializer_class = OrderInfoSerializer
+
+
 class BankCardViewSet(viewsets.ModelViewSet):
     queryset = BankCard.objects.all()
     serializer_class = BankCardSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         user = request.user
@@ -34,4 +51,3 @@ class BankCardViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         card = serializer.save()
         return Response(self.get_serializer(card).data)
-

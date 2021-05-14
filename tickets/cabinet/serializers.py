@@ -9,7 +9,7 @@ class CabinetUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MainUser
-        fields = ['orders']
+        fields = ['id', 'orders']
 
 
 class BankCardSerializer(serializers.ModelSerializer):

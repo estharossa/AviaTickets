@@ -18,4 +18,4 @@ class BankCard(models.Model):
         verbose_name_plural = "Банковские карты"
 
     def __str__(self):
-        return f"{self.id} - {self.card_number} - {self.user.first_name}"
+        return f"{self.card_number} - {self.user.first_name}"

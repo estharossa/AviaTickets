@@ -1,10 +1,11 @@
 from django.urls import path
 from .views import cabinet_orders
 from rest_framework.routers import SimpleRouter
-from .views import BankCardViewSet, CabinetOrderDetailsView, CabinetOrdersView
+from .views import BankCardViewSet, CabinetOrderDetailsView, CabinetOrdersView, PassengerViewSet
 
 router = SimpleRouter()
 router.register('cards', BankCardViewSet)
+router.register('passengers', PassengerViewSet)
 
 urlpatterns = [
     path('orders', cabinet_orders),

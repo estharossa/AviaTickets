@@ -7,6 +7,9 @@ from .models import BankCard, Passenger
 from auth_.models import MainUser
 from airflow.models import FlightOrder
 from airflow.serializers import OrderInfoSerializer
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 @api_view(['GET'])
@@ -52,6 +55,8 @@ class BankCardViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data, context=context)
         serializer.is_valid(raise_exception=True)
         card = serializer.save()
+        logger.debug(f'Created bank with instance: {serializer.instance}')
+        logger.info(f'Created bank with instance: {serializer.instance}')
         return Response(self.get_serializer(card).data)
 
 
@@ -75,4 +80,6 @@ class PassengerViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data, context=context)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        logger.debug(f'Created passenger with instance: {serializer.instance}')
+        logger.info(f'Created passenger with instance: {serializer.instance}')
         return Response(status=status.HTTP_201_CREATED)

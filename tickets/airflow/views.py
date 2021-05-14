@@ -1,8 +1,12 @@
+import logging
+
 from rest_framework import generics, status
 from rest_framework.response import Response
 from airflow.utils.functions import *
 from airflow.serializers import *
 from rest_framework.permissions import *
+
+logger = logging.getLogger(__name__)
 
 
 class OfferView(generics.CreateAPIView):
@@ -45,7 +49,6 @@ class OrderView(generics.CreateAPIView):
         serializer = CreateOrderSerializer(data=request.data, context=context)
         serializer.is_valid(raise_exception=True)
         order = serializer.save()
+        logger.debug(f'Created offer with instance: {serializer.instance}')
+        logger.info(f'Created offer with instance: {serializer.instance}')
         return Response(OrderInfoSerializer(order).data)
-
-
-

@@ -25,7 +25,7 @@ class BankCardSerializer(serializers.ModelSerializer):
     def validate_card_number(self, value):
         if len(value) != 19:
             raise serializers.ValidationError('Card number length validation error')
-        if not value.isdecimal():
+        if not value.replace(' ', '').isdecimal():
             raise serializers.ValidationError('Card number format validation error')
         return value
 
@@ -68,3 +68,9 @@ class PassengerSerializer(serializers.ModelSerializer):
                                              date_of_birth=date_of_birth, citizenship=citizenship,
                                              document_number=document_number, expires_at=expires_at, user=user)
         return passenger
+
+
+class PassengerDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Passenger
+        exclude = ['user']

@@ -2,7 +2,7 @@
 Сервис по онлайн продаже авиабилетов. 
 Быстро. Удобно. Дешево
 
-To run the project, download the zip or clone the repository
+To run the project, download the zip or clone the repository\n
 Create environment with all required python libraries
 Activate the environment
 From environment: python manage.py runserver

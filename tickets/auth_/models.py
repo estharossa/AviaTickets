@@ -59,7 +59,7 @@ class Profile(models.Model):
     user = models.OneToOneField(MainUser, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.first_name
+        return f'{self.id} - {self.first_name} - {self.last_name}'
 
     class Meta:
         verbose_name = 'Profile'

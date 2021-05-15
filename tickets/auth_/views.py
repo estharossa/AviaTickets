@@ -5,10 +5,16 @@ from rest_framework import viewsets, status
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from .serializers import RegisterSerializer, UserSerializer, ProfileSerializer
 from rest_framework_jwt.views import obtain_jwt_token
-from .models import Profile
+from .models import Profile, MainUser
 import logging
 
 logger = logging.getLogger(__name__)
+
+
+class UsersView(viewsets.ModelViewSet):
+    queryset = MainUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class ProfilesView(viewsets.ModelViewSet):
